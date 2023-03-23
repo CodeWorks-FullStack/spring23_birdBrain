@@ -59,10 +59,10 @@ export class Bird {
   }
 
   get ComputeDeleteButton() {
-    return `<button onclick="app.birdsController.deleteBird()" type="button" class="btn btn-danger">This bird is trash <i class="mdi mdi-delete-forever"></i> </button>`
-    // if (appState.account.id == this.informantId) {
-    // }
-    // return ''
+    if (appState.account.id == this.informantId) {
+      return `<button onclick="app.birdsController.deleteBird()" type="button" class="btn btn-danger">This bird is trash <i class="mdi mdi-delete-forever"></i> </button>`
+    }
+    return ''
   }
 
   static BirdForm() {
