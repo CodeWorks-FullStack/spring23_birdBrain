@@ -5,12 +5,14 @@ class BirdsService {
 
 
     async getBirds(query) {
-        const birds = await dbContext.Birds.find(query).populate('informant', 'name picture')
+        // NOTE query is already formatted as an object so we don't need the {} in our find method
+        const birds = await dbContext.Birds.find(query).populate('informant', 'name picture').populate('watcherCount')
         return birds
     }
 
     async getBirdById(birdId) {
-        const foundBird = await dbContext.Birds.findById(birdId).populate('informant', 'name picture')
+        // const foundBird = await dbContext.Birds.find({ id: birdId }).populate('informant', 'name picture')
+        const foundBird = await dbContext.Birds.findById(birdId).populate('informant', 'name picture').populate('watcherCount')
         if (!foundBird) {
             throw new BadRequest("Ain't no bird here")
         }
