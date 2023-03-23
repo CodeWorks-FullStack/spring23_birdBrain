@@ -1,0 +1,30 @@
+body{
+  background-color: #88CDDD;
+}
+
+footer{
+  background-image: url(../img/Grass.png);
+  background-size: cover;
+}
+
+.informant-picture{
+  height: 6vh;
+  width: 6vh;
+  border-radius: 50%;
+}
+
+.bird-card-img{
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  height: 45vh;
+}
+
+
+.bird-title{
+  font-family: 'Finger Paint', cursive;
+}
+
+.active-bird-picture{
+  width: 100%;
+}

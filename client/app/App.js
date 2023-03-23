@@ -1,9 +1,10 @@
 import { AuthController } from './Controllers/AuthController.js';
-import { ValuesController } from './Controllers/ValuesController.js';
+import { BirdsController } from './Controllers/BirdsController.js';
 
 class App {
   authController = new AuthController();
-  valuesController = new ValuesController();
+
+  birdsController = new BirdsController();
 }
 
 // @ts-ignore
