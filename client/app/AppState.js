@@ -18,6 +18,9 @@ class AppState extends EventEmitter {
   /** @type {import('./Models/Bird').Bird | null} */
   bird = null
 
+  /** @type {import('./Models/Account').Profile[]} */
+  watchers = []
+
   socketData = []
 }
 

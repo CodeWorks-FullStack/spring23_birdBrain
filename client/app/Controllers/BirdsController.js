@@ -18,12 +18,28 @@ function _drawActiveBirdTemplate() {
   }
 }
 
+function _drawWatchers() {
+  let template = ''
+  appState.watchers.forEach(w => template += w.WatcherPicture)
+  setHTML('watchers', template)
+}
+
 export class BirdsController {
   constructor () {
     this.getBirds()
     appState.on('birds', _drawBirds)
     appState.on('bird', _drawActiveBirdTemplate)
+    appState.on('bird', this.getWatchersByBirdId)
     appState.on('account', _drawActiveBirdTemplate)
+    appState.on('watchers', _drawWatchers)
+  }
+  async getWatchersByBirdId() {
+    try {
+      await birdsService.getWatchersByBirdId()
+    } catch (error) {
+      console.error(error)
+      Pop.error(error.message)
+    }
   }
 
   async getBirds() {
@@ -59,6 +75,15 @@ export class BirdsController {
         // @ts-ignore
         bootstrap.Modal.getOrCreateInstance('#modal').hide()
       }
+    } catch (error) {
+      console.error(error)
+      Pop.error(error.message)
+    }
+  }
+
+  async becomeWatcher() {
+    try {
+      await birdsService.becomeWatcher()
     } catch (error) {
       console.error(error)
       Pop.error(error.message)

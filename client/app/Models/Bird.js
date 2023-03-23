@@ -1,4 +1,5 @@
 import { appState } from "../AppState.js"
+import { Profile } from "./Account.js"
 
 export class Bird {
   constructor (data) {
@@ -7,9 +8,10 @@ export class Bird {
     this.imgUrl = data.imgUrl
     this.species = data.species
     this.isReal = data.isReal
+    this.watcherCount = data.watcherCount
     this.location = data.location
     this.informantId = data.informantId
-    this.informant = data.informant
+    this.informant = new Profile(data.informant)
     this.createdAt = new Date(data.createdAt)
   }
 
@@ -23,7 +25,7 @@ export class Bird {
             <b class="fs-2">${this.name}</b>
             <div class="fs-3">
               <span>👀</span>
-              <span>1</span>
+              <span>${this.watcherCount}</span>
             </div>
           </div>
           <img
@@ -49,8 +51,14 @@ export class Bird {
           <h2>${this.species}</h2>
           <h2>${this.location}</h2>
         </div>
+        <h3 class="mb-3">
+          Watchers:
+        </h3>
+        <div id="watchers" class="d-flex justify-content-around">
+        </div>
       </div>
       <div class="modal-footer">
+        ${this.ComputeIveSeenThatBirdButton}
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         ${this.ComputeDeleteButton}
       </div>
@@ -61,6 +69,13 @@ export class Bird {
   get ComputeDeleteButton() {
     if (appState.account.id == this.informantId) {
       return `<button onclick="app.birdsController.deleteBird()" type="button" class="btn btn-danger">This bird is trash <i class="mdi mdi-delete-forever"></i> </button>`
+    }
+    return ''
+  }
+
+  get ComputeIveSeenThatBirdButton() {
+    if (appState.account.id && appState.account.id != this.informantId) {
+      return ` <button onclick="app.birdsController.becomeWatcher()" type="button" class="btn btn-info">I've seen that bird</button>`
     }
     return ''
   }

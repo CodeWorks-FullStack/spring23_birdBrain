@@ -1,8 +1,23 @@
 import { appState } from "../AppState.js";
+import { Profile } from "../Models/Account.js";
 import { Bird } from "../Models/Bird.js";
 import { server } from "./AxiosService.js"
 
 class BirdsService {
+  async getWatchersByBirdId() {
+    const bird = appState.bird
+    const res = await server.get('api/birds/' + bird.id + '/watchers')
+    console.log('get watchers', res.data);
+    appState.watchers = res.data.map(w => new Profile(w.watcher))
+  }
+  async becomeWatcher() {
+    const res = await server.post('api/watchers', { birdId: appState.bird.id })
+    console.log('become wathcer', res.data);
+    appState.watchers.push(new Profile(res.data.watcher))
+    appState.emit('watchers')
+    appState.bird.watcherCount++
+    appState.emit('birds')
+  }
   async deleteBird() {
     const bird = appState.bird
     const res = await server.delete('api/birds/' + bird.id)
